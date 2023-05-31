@@ -37,9 +37,9 @@ RUN apt-get update \
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 
-COPY ./common/start-container /usr/local/bin/start-container
-COPY ./common/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY ./common/php.ini "$PHP_INI_DIR/php.ini"
+COPY start-container /usr/local/bin/start-container
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY php.ini "$PHP_INI_DIR/php.ini"
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
