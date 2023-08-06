@@ -9,7 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions pgsql gd imap zip bcmath soap intl imagick ldap msgpack igbinary redis swoole opcache memcached
+    install-php-extensions pgsql gd imap zip bcmath soap intl imagick ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql
 RUN apt-get update \
     && apt-get install -y supervisor jpegoptim optipng pngquant gifsicle libpng-dev \
     && apt-get -y autoremove \
