@@ -5,8 +5,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ADD https://dist.1-2.dev/imei.sh /usr/local/bin/
-
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev python2 \
     && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
@@ -30,8 +28,6 @@ RUN apt-get update \
        php8.2-msgpack php8.2-igbinary php8.2-redis php8.2-swoole \
        php8.2-memcached php8.2-opcache \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && chmod +x /usr/local/bin/imei.sh \
-    && bash /usr/local/bin/imei.sh --skip-jxl --ci \
     && printf "\n" | pecl install imagick \
     && apt-get -y autoremove \
     && apt-get clean \
