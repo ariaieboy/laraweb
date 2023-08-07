@@ -26,10 +26,10 @@ RUN apt-get update \
        php8.2-xml php8.2-zip php8.2-bcmath php8.2-soap \
        php8.2-intl php8.2-readline \
        php8.2-ldap \
-       php8.2-msgpack php8.2-igbinary php8.2-redis php8.2-swoole \
+       php8.2-msgpack php8.2-igbinary php8.2-redis \
        php8.2-memcached php8.2-opcache \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && printf "\n" | pecl install imagick \
+    && printf "\n" | pecl install imagick swoole \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
