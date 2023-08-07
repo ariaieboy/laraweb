@@ -31,7 +31,7 @@ RUN apt-get update \
        php8.2-memcached php8.2-opcache \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && chmod +x /usr/local/bin/imei.sh \
-    && bash /usr/local/bin/imei.sh --skip-jxl --ci --checkinstall \
+    && bash /usr/local/bin/imei.sh --skip-jxl --ci \
     && printf "\n" | pecl install imagick \
     && apt-get -y autoremove \
     && apt-get clean \
