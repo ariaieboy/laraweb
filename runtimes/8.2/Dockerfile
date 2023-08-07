@@ -19,7 +19,7 @@ RUN apt-get update \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && curl -sSL https://packages.sury.org/php/README.txt | bash -x \
     && apt-get update \
-    && apt-get install -y imagemagick-7 php8.2-cli php8.2-dev \
+    && apt-get install -y libmagickwand-7-10 imagemagick-7 php8.2-cli php8.2-dev \
        php8.2-pgsql php8.2-sqlite3 php8.2-gd \
        php8.2-curl \
        php8.2-imap php8.2-mysql php8.2-mbstring \
