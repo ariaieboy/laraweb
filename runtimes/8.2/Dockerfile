@@ -1,4 +1,4 @@
-FROM debian:12
+FROM ubuntu:22.04
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -8,10 +8,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ADD https://dist.1-2.dev/imei.sh /usr/local/bin/
 
 RUN apt-get update \
-    && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev \
+    && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev python2 \
     && chmod +x /usr/local/bin/imei.sh \
-    && bash /usr/local/bin/imei.sh --skip-jxl --ci --skip-aom --skip-heif \
-    && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+    && bash /usr/local/bin/imei.sh --skip-jxl --ci \
+    && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt-get update \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
@@ -20,7 +20,7 @@ RUN apt-get update \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bookworm main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
     && apt-get install -y php8.2-cli php8.2-dev \
        php8.2-pgsql php8.2-sqlite3 php8.2-gd \
