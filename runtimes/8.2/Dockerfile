@@ -19,8 +19,8 @@ RUN apt-get update \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && curl -sSL https://packages.sury.org/php/README.txt | bash -x \
     && apt-get update \
-    && apt-get install -y libmagickwand-7-10 imagemagick-7 php8.2-cli php8.2-dev \
-       php8.2-pgsql php8.2-sqlite3 php8.2-gd \
+    && apt-get install -y php8.2-cli php8.2-dev \
+       php8.2-pgsql php8.2-sqlite3 php8.2-gd php8.2-imagick \
        php8.2-curl \
        php8.2-imap php8.2-mysql php8.2-mbstring \
        php8.2-xml php8.2-zip php8.2-bcmath php8.2-soap \
@@ -29,7 +29,7 @@ RUN apt-get update \
        php8.2-msgpack php8.2-igbinary php8.2-redis \
        php8.2-memcached php8.2-opcache \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && printf "\n" | pecl install imagick swoole \
+    && printf "\n" | pecl install swoole \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
