@@ -1,44 +1,18 @@
-FROM debian:12
+FROM php:8.2-cli-alpine
+
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-RUN apt-get update \
-    && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev \
-    && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-    && sh -c 'echo "deb https://www.deb-multimedia.org bookworm main non-free" > /etc/apt/sources.list.d/multimedia.list' \
-    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-    && wget https://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb \
-    && dpkg -i deb-multimedia-keyring_2016.8.1_all.deb \
-    && apt-get update \
-    && apt-get install -y postgresql-client-$POSTGRES_VERSION \
-    && mkdir -p ~/.gnupg \
-    && chmod 600 ~/.gnupg \
-    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && curl -sSL https://packages.sury.org/php/README.txt | bash -x \
-    && apt-get update \
-    && apt-get install -y php8.2-cli php8.2-dev \
-       php8.2-pgsql php8.2-sqlite3 php8.2-gd php8.2-imagick \
-       php8.2-curl \
-       php8.2-imap php8.2-mysql php8.2-mbstring \
-       php8.2-xml php8.2-zip php8.2-bcmath php8.2-soap \
-       php8.2-intl php8.2-readline \
-       php8.2-ldap \
-       php8.2-msgpack php8.2-igbinary php8.2-redis \
-       php8.2-memcached php8.2-opcache \
-    && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
-    && printf "\n" | pecl install swoole \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions pgsql gd imap zip bcmath pcntl soap intl exif imagick ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql
 
-RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
+RUN apk add --update supervisor postgresql15-client jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
 
+RUN ln -s /usr/local/bin/php /usr/bin/php
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.2/cli/php.ini
+COPY php.ini "$PHP_INI_DIR/php.ini"
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
