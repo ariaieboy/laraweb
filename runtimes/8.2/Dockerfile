@@ -10,7 +10,7 @@ ADD https://dist.1-2.dev/imei.sh /usr/local/bin/
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev \
     && chmod +x /usr/local/bin/imei.sh \
-    && bash /usr/local/bin/imei.sh --skip-jxl --ci \
+    && bash /usr/local/bin/imei.sh --skip-jxl --ci --skip-aom --skip-heif \
     && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt-get update \
