@@ -10,6 +10,8 @@ RUN apt-get update \
     && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
     && sh -c 'echo "deb https://www.deb-multimedia.org bookworm main non-free" > /etc/apt/sources.list.d/multimedia.list' \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && wget https://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb \
+    && dpkg -i deb-multimedia-keyring_2016.8.1_all.deb \
     && apt-get update \
     && apt-get install -y postgresql-client-$POSTGRES_VERSION \
     && mkdir -p ~/.gnupg \
