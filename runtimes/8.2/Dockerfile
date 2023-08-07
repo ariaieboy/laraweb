@@ -17,9 +17,7 @@ RUN apt-get update \
     && mkdir -p ~/.gnupg \
     && chmod 600 ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
-    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/debian bookworm main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && curl -sSL https://packages.sury.org/php/README.txt | bash -x \
     && apt-get update \
     && apt-get install -y imagemagick-7 php8.2-cli php8.2-dev \
        php8.2-pgsql php8.2-sqlite3 php8.2-gd \
