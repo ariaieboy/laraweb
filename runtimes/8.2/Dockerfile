@@ -9,8 +9,6 @@ ADD https://dist.1-2.dev/imei.sh /usr/local/bin/
 
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl wget libheif-dev ca-certificates jpegoptim optipng pngquant gifsicle zip unzip supervisor libcap2-bin libavif-bin libpng-dev python2 \
-    && chmod +x /usr/local/bin/imei.sh \
-    && bash /usr/local/bin/imei.sh --skip-jxl --ci --checkinstall \
     && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt-get update \
@@ -31,8 +29,10 @@ RUN apt-get update \
        php8.2-ldap \
        php8.2-msgpack php8.2-igbinary php8.2-redis php8.2-swoole \
        php8.2-memcached php8.2-opcache \
-    && printf "\n" | pecl install imagick \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
+    && chmod +x /usr/local/bin/imei.sh \
+    && bash /usr/local/bin/imei.sh --skip-jxl --ci --checkinstall \
+    && printf "\n" | pecl install imagick \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
