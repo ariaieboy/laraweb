@@ -7,7 +7,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions pgsql gd imap zip bcmath pcntl soap intl exif imagick ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql
 
-RUN apk add --update supervisor postgresql15-client jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
+RUN apk add --update supervisor postgresql16-client jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
 
 RUN ln -s /usr/local/bin/php /usr/bin/php
 COPY start-container /usr/local/bin/start-container
