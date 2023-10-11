@@ -8,7 +8,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions pgsql gd imap zip bcmath pcntl soap intl exif imagick ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql
 
 RUN apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev && rm  -rf /tmp/* /var/cache/apk/*
-RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
   postgresql16-client
 RUN ln -s /usr/local/bin/php /usr/bin/php
 COPY start-container /usr/local/bin/start-container
