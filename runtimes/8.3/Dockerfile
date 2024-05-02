@@ -10,7 +10,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
     postgresql16-client && \
     rm  -rf /tmp/* /var/cache/apk/* && \
-    ln -s /usr/local/bin/php /usr/bin/php \
+    ln -s /usr/local/bin/php /usr/bin/php
 
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
