@@ -5,7 +5,7 @@ WORKDIR /var/www/html
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions @composer pgsql gd imap zip bcmath pcntl soap intl exif ldap msgpack igbinary redis swoole opcache memcached pdo_pgsql && \
+    install-php-extensions @composer pgsql gd imap zip bcmath pcntl soap intl exif ldap msgpack igbinary swoole opcache memcached redis pdo_pgsql && \
     apk add --update supervisor jpegoptim optipng pngquant gifsicle libpng-dev && \
     apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/main \
     postgresql16-client && \
