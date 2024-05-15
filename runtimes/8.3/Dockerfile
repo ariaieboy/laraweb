@@ -17,5 +17,5 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini "$PHP_INI_DIR/php.ini"
 RUN chmod +x /usr/local/bin/start-container
 
-EXPOSE 8000
+EXPOSE 80
 ENTRYPOINT ["start-container"]
